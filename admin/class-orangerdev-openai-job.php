@@ -294,7 +294,7 @@ DO NOT PUT ANY COMMENT from YOU, WE DON'T NEED THAT!!!";
       do_action("inspect", [
         "job_improvement",
         [
-          $data
+          $ai_response
         ]
       ]);
 
