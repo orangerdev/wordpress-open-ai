@@ -164,8 +164,9 @@ class Orangerdev_Openai
 
     $job = new OrangerdevOpenAI\Admin\Job($this->get_plugin_name(), $this->get_version());
 
-    $this->loader->add_filter("orangerdev/openai/settings_fields",          $job, "register_setting");
+    $this->loader->add_filter("orangerdev/openai/settings_fields",                  $job, "register_setting");
     $this->loader->add_action("wp_ajax_orangerdev/openai/improve-job-description",  $job, "improve_job_description");
+    $this->loader->add_action("wp_ajax_orangerdev/openai/save-job-description",     $job, "save_job_description");
   }
 
   /**
@@ -179,6 +180,7 @@ class Orangerdev_Openai
   {
 
     $public = new OrangerdevOpenAI\Front($this->get_plugin_name(), $this->get_version());
+    // $this->loader->add_action("djt/job-submit-form/after",  $public, "add_enhancement_form", 10, 2);
 
     $job = new OrangerdevOpenAI\Front\Job($this->get_plugin_name(), $this->get_version());
     $this->loader->add_action("djt/job-submit-preview-form/after",  $job, "add_enhancement_preview_form", 10, 2);

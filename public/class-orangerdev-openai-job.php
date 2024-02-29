@@ -77,8 +77,8 @@ class Job
 
     $is_improved = get_post_meta($job_post->ID, '_openai_job_improvement', true);
 
-    if ($is_improved)
-      return;
+    // if ($is_improved)
+    //   return;
 
     require_once plugin_dir_path(__FILE__) . 'partials/after-job-preview.php';
   }

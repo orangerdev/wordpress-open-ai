@@ -1,11 +1,38 @@
 <?php
 
+/**
+ * Create request to OpenAI API
+ * @param string $role
+ * @param string $prompt
+ * @return array|WP_Error
+ */
 function orangerdev_openai_request($role, $prompt)
 {
 
   $superio_options = get_option("superio_theme_options");
 
   $enable = boolval($superio_options["openai_api_enabled"]);
+
+  if (defined('ORANGERDEV_OPENAI_AI_MODE') && ORANGERDEV_OPENAI_AI_MODE === 'dummy') :
+    // return dummy content
+
+    return [
+      "choices" => [
+        0 => [
+          "message" => [
+            "role" => "assistant",
+            "content" => json_encode([
+              "summary" => "This is a summary",
+              "roles&responsibilites" => "These are the roles and responsibilities",
+              "requirements" => "These are the requirements",
+              "shift_timings" => "These are the shift timings",
+              "why_join_us" => "This is why you should join us",
+            ])
+          ]
+        ]
+      ]
+    ];
+  endif;
 
   if ($enable !== true)
     return new WP_Error("openai_api_disabled", "OpenAI API is disabled");

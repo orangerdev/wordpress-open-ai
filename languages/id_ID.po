@@ -1,0 +1,90 @@
+# Copyright (C) 2024 Ridwan Arifandi
+# This file is distributed under the GPL-2.0+.
+msgid ""
+msgstr ""
+"Project-Id-Version: OrangerDev OpenAI 1.0.0\n"
+"Report-Msgid-Bugs-To: https://wordpress.org/support/plugin/orangerdev-open-"
+"ai\n"
+"POT-Creation-Date: 2024-02-07T06:18:04+00:00\n"
+"PO-Revision-Date: 2024-02-07 13:25+0700\n"
+"Last-Translator: \n"
+"Language-Team: \n"
+"Language: id_ID\n"
+"MIME-Version: 1.0\n"
+"Content-Type: text/plain; charset=UTF-8\n"
+"Content-Transfer-Encoding: 8bit\n"
+"X-Generator: Poedit 3.4\n"
+"X-Domain: orangerdev-openai\n"
+
+#. Plugin Name of the plugin
+msgid "OrangerDev OpenAI"
+msgstr ""
+
+#. Plugin URI of the plugin
+msgid "https://ridwan-arifandi.com"
+msgstr ""
+
+#. Description of the plugin
+msgid "Integrate Doctorjobs.today with OpenAI"
+msgstr ""
+
+#. Author of the plugin
+msgid "Ridwan Arifandi"
+msgstr ""
+
+#. Author URI of the plugin
+msgid "https://ridwan-arifandi.com/"
+msgstr ""
+
+#: admin/class-orangerdev-openai-job.php:212
+msgid "Roles & Responsibilities"
+msgstr "Peran dan Tanggung Jawab"
+
+#: admin/class-orangerdev-openai-job.php:216
+msgid "Requirements"
+msgstr "Persyaratan"
+
+#: admin/class-orangerdev-openai-job.php:220
+msgid "Shift/Timings"
+msgstr "Shift / Jam Kerja"
+
+#: admin/class-orangerdev-openai-job.php:224
+msgid "Why Join?"
+msgstr "Kenapa Bergabung Dengan Kami?"
+
+#: admin/class-orangerdev-openai-job.php:309
+msgid "Job description improved successfully"
+msgstr ""
+
+#: public/partials/after-job-preview.php:3
+msgid ""
+"We have improved your Job Description and created a Job Summary based on "
+"best practices to ensure you receive the maximum number of applicants. Click "
+"on <strong>Submit Job</strong> to use this improved Job Description or click "
+"on edit to make further changes."
+msgstr ""
+"Kami telah menyempurnakan deskripsi pekerjaan anda dan telah membuat "
+"ringkasan pekerjaan berdasarkan teknologi kami untuk memastikan anda "
+"menerima jumlah pelamar maksimum. Klik <strong>Kirim Pekerjaan</strong> "
+"untuk menggunakan deskripsi pekerjaan yang telah disempurnakan atau klik "
+"edit untuk melakukan perubahan lebih lanjut."
+
+#: public/partials/after-job-preview.php:13
+msgid "Edit Job Description"
+msgstr ""
+
+#: public/partials/after-job-preview.php:25
+msgid "Restored"
+msgstr ""
+
+#: public/partials/after-job-preview.php:26
+msgid "We have restored your 'original' job description"
+msgstr ""
+
+#: public/partials/after-job-preview.php:29
+msgid "Restore"
+msgstr ""
+
+#: public/partials/after-job-preview.php:30
+msgid "Save"
+msgstr ""

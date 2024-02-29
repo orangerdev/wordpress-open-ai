@@ -89,7 +89,7 @@ Your output should always be a job description that is optimized for SEO, is inf
 When optimizing this JD follow the following instructions -
 
 Understand the relevant target audience
--This job is posted for DOKTER UMUM (Aesthetic Doctor), and is meant to be advertised to a specific specialty of HCP, please optimize the job description for the specific specialty and job title provided.
+-This job is posted for {job_title}, and is meant to be advertised to a specific specialty of HCP, please optimize the job description for the specific specialty and job title provided.
 
 Improve the roles and responsibilities section
 -Whenever there is key information missing that would highlight the key roles and responsibilities expected of the HCP, please extrapolate the responsibilities that a doctor within the relevant specialty would conduct and add the new details to the job description. For example, if the role is for an internal medicine consultant - their duties will include conducting rounds, if the role is for an emergency physician their duties - a key responsibility would be to conduct the triage of patients. Similar to the examples, please add key details to the roles and responsibilities section by extrapolating the information provided in the existing JD and the Job Title.
@@ -121,6 +121,12 @@ Make sure :
 DO NOT PUT ANY COMMENT from YOU, WE DON'T NEED THAT!!!";
   }
 
+  /**
+   * Generate prompt text based on job post
+   * @since   1.0.0
+   * @param   WP_Post $job_post
+   * @return  string
+   */
   protected function generate_prompt($job_post)
   {
     $superio_options = get_option('superio_theme_options');
@@ -252,7 +258,7 @@ DO NOT PUT ANY COMMENT from YOU, WE DON'T NEED THAT!!!";
 
   /**
    * Improve job description
-   * Hooked via orangerdev/openai/improve-job-description
+   * Hooked via wp_ajax_orangerdev/openai/improve-job-description, priority 10
    * @since   1.0.0
    */
   public function improve_job_description()
@@ -289,6 +295,10 @@ DO NOT PUT ANY COMMENT from YOU, WE DON'T NEED THAT!!!";
       if (!isset($ai_response['choices'][0]['message']['content']))
         throw new \Exception('Invalid response');
 
+      // check if response is not valid json
+      if (!json_decode($ai_response['choices'][0]['message']['content']))
+        throw new \Exception('Invalid response');
+
       $data = json_decode($ai_response['choices'][0]['message']['content'], true);
 
       do_action("inspect", [
@@ -304,11 +314,73 @@ DO NOT PUT ANY COMMENT from YOU, WE DON'T NEED THAT!!!";
         throw new \Exception('Job description not improved');
 
       $improved['description'] = apply_filters('the_content', $improved['description']);
+      $improved['esc_description'] = esc_textarea(strip_tags($improved['description']));
+
 
       $response['success'] = true;
       $response['message'] = __("Job description improved successfully", "orangerdev-openai");
 
       $response['data'] = $improved;
+    } catch (\Exception $e) {
+      $response['message'] = $e->getMessage();
+    } finally {
+      wp_send_json($response);
+      exit;
+    }
+  }
+
+  /**
+   * Save job description
+   * Hooked via wp_ajax_orangerdev/openai/save-job-description, priority 10
+   * @since   1.0.0
+   * @author  Ridwan Arifandi
+   * @return  void
+   */
+  public function save_job_description()
+  {
+    $response = [
+      'success' => false,
+      'message' => '',
+      'data' => []
+    ];
+
+    try {
+      $postdata = wp_parse_args($_POST, [
+        'postID' => 0,
+        'nonce' => '',
+        'improvedDesc' => '',
+        'originalDesc' => '',
+        'contentType' => ''
+      ]);
+
+      if (!wp_verify_nonce($postdata['nonce'], 'orangerdev/openai/save-job-description'))
+        throw new \Exception('Invalid nonce');
+
+      $post = get_post($postdata['postID']);
+
+      if (!is_a($post, 'WP_Post') || $post->post_type !== 'job_listing')
+        throw new \Exception('Invalid job post');
+
+      $real_author = (int) $post->_job_real_author;
+      $current_author = (int) get_current_user_id();
+
+      if ($real_author !== $current_author)
+        throw new \Exception('You are not allowed to update this job description');
+
+      $content = $postdata['contentType'] === 'ai' ? $postdata['improvedDesc'] : $postdata['originalDesc'];
+
+      if (empty($content))
+        throw new \Exception('Content is empty');
+
+      wp_update_post([
+        'ID' => $post->ID,
+        'post_content' => $content
+      ]);
+
+      update_post_meta($post->ID, '_job_description', $content);
+
+      $response['success'] = true;
+      $response['data']['description'] = apply_filters('the_content', $content);
     } catch (\Exception $e) {
       $response['message'] = $e->getMessage();
     } finally {
