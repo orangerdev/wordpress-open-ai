@@ -38,7 +38,6 @@ if (!defined('WPINC')) {
 define('ORANGERDEV_OPENAI_VERSION', '1.0.0');
 define('ORANGERDEV_OPENAI_PLUGIN_DIR', plugin_dir_path(__FILE__));
 define('ORANGERDEV_OPENAI_PLUGIN_URL', plugin_dir_url(__FILE__));
-define('ORANGERDEV_OPENAI_AI_MODE', 'dummy');
 
 /**
  * The code that runs during plugin activation.

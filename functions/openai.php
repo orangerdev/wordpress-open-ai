@@ -13,8 +13,13 @@ function orangerdev_openai_request($role, $prompt)
 
   $enable = boolval($superio_options["openai_api_enabled"]);
 
-  if (defined('ORANGERDEV_OPENAI_AI_MODE') && ORANGERDEV_OPENAI_AI_MODE === 'dummy') :
+  if ($superio_options["openai_mode"] === "dummy") :
     // return dummy content
+
+    $dummy_response = $superio_options["openai_dummy_response"];
+
+    if ($dummy_response === "error")
+      return new WP_Error("openai_dummy_error", "OpenAI Dummy Error");
 
     return [
       "choices" => [

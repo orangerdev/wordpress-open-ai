@@ -76,9 +76,10 @@ class Job
       return;
 
     $is_improved = get_post_meta($job_post->ID, '_openai_job_improvement', true);
+    $force_update = $superio_options['openai_force_update'];
 
-    // if ($is_improved)
-    //   return;
+    if ($is_improved && !$force_update)
+      return;
 
     require_once plugin_dir_path(__FILE__) . 'partials/after-job-preview.php';
   }

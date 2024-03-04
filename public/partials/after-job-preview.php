@@ -68,7 +68,7 @@ $success_message = __("We have improved your Job Description and created a Job S
     // Create a div for the text
     var text = document.createElement('div');
     text.className = 'text';
-    text.textContent = '<?php _e("Hang tight! We are working our magic on your request.", "orangerdev-openai"); ?>';
+    text.textContent = '<?php _e("Hang tight! We are working our magic on your request. Please do not exit your browser.", "orangerdev-openai"); ?>';
     // Position the text next to the spinner
     text.style.marginLeft = '10px';
     text.style.alignSelf = 'center';
@@ -112,6 +112,13 @@ $success_message = __("We have improved your Job Description and created a Job S
     element.removeChild(overlay);
   }
 
+  function decodeHtml(html) {
+    var txt = document.createElement("textarea");
+    txt.innerHTML = html;
+    return txt.value;
+  }
+
+
   (function($) {
     $(document).ready(function() {
 
@@ -132,7 +139,13 @@ $success_message = __("We have improved your Job Description and created a Job S
             if (response.data.description !== "") {
               $("#action-preview-holder .text-info").html("<?php echo $success_message; ?>");
               $(".content-job-detail .list-content-job .the-content").html(response.data.description);
-              $("textarea#ai-job-description").val(response.data.esc_description);
+
+
+              // decode &amp; and other codes to normal text for response.data.esc_description
+
+
+
+              $("textarea#ai-job-description").val(decodeURI(decodeHtml(response.data.esc_description)));
             }
           }
         },

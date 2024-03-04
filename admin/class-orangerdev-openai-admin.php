@@ -118,6 +118,31 @@ class Admin
         'type' => 'text',
         'title' => 'Location',
         'default' => 'Indonesia',
+      ],
+      [
+        'id' => 'openai_mode',
+        'type' => 'select',
+        'title' => 'Development Mode',
+        'options' => [
+          'production' => 'Production',
+          'dummy' => 'Dummy'
+        ],
+      ],
+      [
+        'id' => 'openai_dummy_response',
+        'type' => 'select',
+        'title' => 'Dummy Response Type',
+        'options' => [
+          "success" => "Return as Success",
+          "error" => "Return as Error"
+        ],
+        'default' => "success"
+      ],
+      [
+        'id' => 'openai_force_update',
+        'type' => 'switch',
+        'title' => 'Force Update',
+        'default' => false,
       ]
     ]);
 
